@@ -1,136 +1,323 @@
-# Ex.No.5-Building-and-Training-a-CNN
-## Building and Training a CNN: Use a framework like TensorFlow or PyTorch to build and train a CNN
-## Aim :To build and train a CNN 
+# Ex.No.4b--MACHINE-LEARNING-MODEL-HEART-DISEASE-PREDICTION
+## AIM
+To develop a Heart Disease Prediction model using machine learning classification algorithms and compare the performance of different models using suitable evaluation metrics.
+##  OBJECTIVES
+•	To understand machine learning classification. 
+•	To analyze a heart disease dataset. 
+•	To identify the input features and target variable. 
+•	To preprocess the dataset. 
+•	To divide the dataset into training and testing data. 
+•	To train different classification models. 
+•	To predict whether a patient has heart disease. 
+•	To evaluate and compare the models. 
+## INTRODUCTION
+•	Machine Learning enables computers to learn patterns from data and make predictions. 
+•	Classification is a supervised learning technique used to predict categories or classes. 
+•	In this experiment, classification algorithms are used to predict whether a patient is likely to have heart disease. 
+•	The output generally contains two classes: 
+o	0 – No Heart Disease 
+o	1 – Heart Disease 
+# PROCEDURE
+Import Libraries: Import Pandas, NumPy, Matplotlib, Seaborn, and Scikit-learn.
+Load Dataset: Load the heart disease dataset and examine its features and target variable.
+Preprocess Data: Handle missing values, remove duplicates, and convert categorical data into numerical form if required.
+Split Data: Separate the input features and target variable, then split the dataset into training and testing data.
+Train Models: Apply classification algorithms such as Logistic Regression, Decision Tree, KNN, and Random Forest.
+Make Predictions: Use the trained models to predict whether heart disease is present or absent.
+Evaluate Models: Calculate Accuracy, Precision, Recall, F1-Score, and Confusion Matrix.
+Compare Results: Compare the performance of all models and identify the best-performing classification model.
+# WORKING PRINCIPLE 
+The heart disease prediction system works by using machine learning classification algorithms to learn patterns from patient health data.
 
-## Procedure
-Step 1: Import Libraries
-•	import tensorflow.keras for CNN layers and models
-•	import matplotlib.pyplot for visualisation
-•	to_categorical for one-hot encoding
-import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
-from tensorflow.keras.utils import to_categorica
-import matplotlib.pyplot as plt
+Input Data: Patient features such as age, blood pressure, cholesterol, and other relevant attributes are given as input.
+Preprocessing: The data is cleaned, converted into a suitable format, and scaled if required.
+Model Training: Classification algorithms learn the relationship between patient features and the target outcome from the training data.
+Prediction: The trained model predicts whether the patient is likely to have heart disease or not.
+Evaluation: The prediction performance is measured using accuracy, precision, recall, and F1-score.
+Model Comparison: The results of different classification models are compared to select the best-performing model.
+# PROGRAM
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# Load dataset
+data = pd.read_csv("heart.csv")
+
+# Separate features and target
+X = data.drop("target", axis=1)
+y = data["target"]
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Feature scaling
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Create models
+models = {
+    "Logistic Regression": LogisticRegression(),
+    "Decision Tree": DecisionTreeClassifier(random_state=42),
+    "KNN": KNeighborsClassifier(),
+    "Random Forest": RandomForestClassifier(random_state=42)
+}
+
+# Train and evaluate models
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+
+    print("\n", name)
+    print("Accuracy :", accuracy_score(y_test, y_pred))
+    print("Precision:", precision_score(y_test, y_pred))
+    print("Recall   :", recall_score(y_test, y_pred))
+    print("F1 Score :", f1_score(y_test, y_pred))
+# BLOCK DIAGRAM
+        ┌──────────────────────────┐
+        │  HEART DISEASE DATASET   │
+        └────────────┬─────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │   DATA PREPROCESSING     │
+        │ Missing Values & Encoding│
+        └────────────┬─────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │ FEATURE & TARGET SPLIT   │
+        └────────────┬─────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │    TRAIN-TEST SPLIT      │
+        └────────────┬─────────────┘
+                     ↓
+     ┌─────────────────────────────────┐
+     │     CLASSIFICATION MODELS       │
+     │                                 │
+     │ Logistic Regression             │
+     │ Decision Tree                   │
+     │ K-Nearest Neighbors (KNN)       │
+     │ Random Forest                   │
+     └───────────────┬─────────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │       PREDICTION         │
+        │ Heart Disease / No       │
+        └────────────┬─────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │    MODEL EVALUATION      │
+        │ Accuracy | Precision     │
+        │ Recall | F1-Score        │
+        └────────────┬─────────────┘
+                     ↓
+        ┌──────────────────────────┐
+        │  COMPARE & SELECT BEST   │
+        │         MODEL            │
+        └──────────────────────────┘
+
+
+
+## DATASET
+The dataset contains medical information about patients.
+Typical attributes include:
+Attribute	Description
+Age	Age of the patient
+Sex	Gender of the patient
+Chest Pain	Type of chest pain
+Resting BP	Resting blood pressure
+Cholesterol	Cholesterol level
+Fasting Blood Sugar	Blood sugar condition
+Resting ECG	Resting electrocardiogram result
+Maximum Heart Rate	Maximum heart rate achieved
+Exercise Angina	Exercise-induced angina
+Oldpeak	ST depression value
+Target	Presence or absence of heart disease
+## TARGET VARIABLE
+•	Target is the dependent variable. 
+•	It indicates whether the patient has heart disease. 
+•	Usually: 
+0 → No Heart Disease
+1 → Heart Disease
+6. DATA PREPROCESSING
+### Steps
+1.	Load the dataset. 
+2.	Display the first few records. 
+3.	Check dataset shape. 
+4.	Check data types. 
+5.	Check missing values. 
+6.	Handle missing values if present. 
+7.	Separate features and target. 
+8.	Encode categorical variables if required. 
+9.	Split the dataset into training and testing data. 
+10.	Apply feature scaling where required. 
+### Code
+import pandas as pd
 import numpy as np
 
-Step 2: Load CIFAR-10 Dataset
-•	Training Set: 50,000 images
-•	Test Set: 10,000 images
-•	Classes: Airplane, Automobile, Bird, Cat, Deer, Dog, Frog, Horse, Ship, Truck
-(X_train, y_train), (X_test, y_test) 
-=datasets.cifar10.load_data()
+df = pd.read_csv("heart_disease.csv")
 
-Step 3: Preprocess Data
-•	Normalization scales pixel values to the range [0, 1], improving model stability and convergence.
-•	One-hot encoding converts each label into a 10-dimensional vector for multiclass classification.
-X_train = X_train.astype('float32') / 255.0X_test = X_test.astype('float32') / 255.0
+print(df.head())
+print(df.shape)
+print(df.info())
+print(df.isnull().sum())
+7. SEPARATE INPUT AND OUTPUT
+X = df.drop("target", axis=1)
+y = df["target"]
+•	X → Patient characteristics. 
+•	y → Heart disease prediction. 
+###  TRAIN-TEST SPLIT
+from sklearn.model_selection import train_test_split
 
-y_train = to_categorical(y_train, 10)y_test = to_categorical(y_test, 10)
-Step 4: Visualize Sample Images
-•	Displays a 4×4 grid of sample images from the training set.
-•	Each image is labeled with its corresponding class name.
-class_names = ['Airplane','Automobile','Bird','Cat','Deer','Dog','Frog','Horse','Ship','Truck']
-plt.figure(figsize=(10,10))for i in range(16):
-    plt.subplot(4,4,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(X_train[i])
-plt.xlabel(class_names[np.argmax(y_train[i])])
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+•	80% → Training data 
+•	20% → Testing data 
+## FEATURE SCALING
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+## MACHINE LEARNING MODELS
+The following models can be compared:
+1.	Logistic Regression 
+2.	K-Nearest Neighbors 
+3.	Decision Tree 
+4.	Random Forest 
+5.	Support Vector Machine 
+6.	Gradient Boosting 
+## LOGISTIC REGRESSION
+from sklearn.linear_model import LogisticRegression
+
+lr = LogisticRegression(max_iter=1000)
+
+lr.fit(X_train_scaled, y_train)
+
+y_pred_lr = lr.predict(X_test_scaled)
+##  K-NEAREST NEIGHBORS
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5)
+
+knn.fit(X_train_scaled, y_train)
+
+y_pred_knn = knn.predict(X_test_scaled)
+## DECISION TREE
+from sklearn.tree import DecisionTreeClassifier
+
+dt = DecisionTreeClassifier(
+    random_state=42
+)
+
+dt.fit(X_train, y_train)
+
+y_pred_dt = dt.predict(X_test)
+## RANDOM FOREST
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
+
+rf.fit(X_train, y_train)
+
+y_pred_rf = rf.predict(X_test)
+## SUPPORT VECTOR MACHINE
+from sklearn.svm import SVC
+
+svm = SVC(kernel="rbf")
+
+svm.fit(X_train_scaled, y_train)
+
+y_pred_svm = svm.predict(X_test_scaled)
+## GRADIENT BOOSTING
+from sklearn.ensemble import GradientBoostingClassifier
+
+gb = GradientBoostingClassifier(
+    random_state=42
+)
+
+gb.fit(X_train, y_train)
+
+y_pred_gb = gb.predict(X_test)
+## MODEL EVALUATION
+The models can be evaluated using:
+•	Accuracy 
+•	Precision 
+•	Recall 
+•	F1-score 
+•	Confusion Matrix 
+## Code
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+models = {
+    "Logistic Regression": y_pred_lr,
+    "KNN": y_pred_knn,
+    "Decision Tree": y_pred_dt,
+    "Random Forest": y_pred_rf,
+    "SVM": y_pred_svm,
+    "Gradient Boosting": y_pred_gb
+}
+
+for name, prediction in models.items():
+
+    print(name)
+    print("Accuracy :", accuracy_score(y_test, prediction))
+    print("Precision:", precision_score(y_test, prediction))
+    print("Recall   :", recall_score(y_test, prediction))
+    print("F1 Score :", f1_score(y_test, prediction))
+    print()
+## MODEL COMPARISON
+<img width="591" height="191" alt="image" src="https://github.com/user-attachments/assets/6bb058f3-4231-475d-92d1-2e64233ac6a0" />
+Comparison
+•	Higher Accuracy → Better overall classification. 
+•	Higher Precision → Fewer false-positive predictions. 
+•	Higher Recall → Better identification of patients with heart disease. 
+•	Higher F1-score → Better balance between precision and recall. 
+For a medical prediction task, recall is particularly important because missing a patient who actually has the condition can be more concerning than generating an extra positive prediction.
+## CONFUSION MATRIX
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+cm = confusion_matrix(y_test, y_pred_rf)
+
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt="d",
+    cmap="Blues"
+)
+
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix - Random Forest")
+
 plt.show()
-Step 5: Build the CNN Model
-•	Convolutional layers extract important spatial features from images.
-•	MaxPooling reduces the feature map size and computational load.
-•	Dropout helps prevent overfitting by randomly disabling neurons during training.
-•	Softmax layer produces probability scores for the 10 CIFAR-10 classes.
-model = models.Sequential()
 
-model.add(layers.Conv2D(32, (3,3), activation='relu', padding='same', input_shape=(32,32,3)))model.add(layers.Conv2D(32, (3,3), activation='relu', padding='same'))model.add(layers.MaxPooling2D((2,2)))model.add(layers.Dropout(0.25))
-
-model.add(layers.Conv2D(64, (3,3), activation='relu', padding='same'))model.add(layers.Conv2D(64, (3,3), activation='relu', padding='same'))model.add(layers.MaxPooling2D((2,2)))model.add(layers.Dropout(0.25))
-
-model.add(layers.Conv2D(128, (3,3), activation='relu', padding='same'))model.add(layers.Conv2D(128, (3,3), activation='relu', padding='same'))model.add(layers.MaxPooling2D((2,2)))model.add(layers.Dropout(0.25))
-
-model.add(layers.Flatten())model.add(layers.Dense(512, activation='relu'))model.add(layers.Dropout(0.5))model.add(layers.Dense(10, activation='softmax'))  
-Step 6: Compile the Model
-•	Optimizer: Adam provides fast and stable convergence.
-•	Loss Function: Categorical cross-entropy is used for multiclass output.
-•	Metrics: Accuracy helps track model performance during training.
-model.compile(optimizer='adam',
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
-model.summary()
-Step 7: Train the Model
-•	Epochs: 30 training cycles for learning patterns effectively.
-•	Batch Size: 64 samples per batch for efficient gradient updates.
-•	Validation Split: Helps monitor overfitting and generalization.
-•	History Object: Stores accuracy and loss values for later visualization.
-history = model.fit(X_train, y_train,
-                    epochs=30,
-                    batch_size=64,
-                    validation_split=0.2)
-
-Step 8: Plot Training History
-•	Check for overfitting or underfitting
-•	Visual representation helps debug training issues
-plt.figure(figsize=(12,5))
-
-plt.subplot(1,2,1)plt.plot(history.history['accuracy'], label='Train Accuracy')
-plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-plt.title('Model Accuracy')
-plt.xlabel('Epoch')
-plt.ylabel('Accuracy')
-plt.legend()
-plt.subplot(1,2,2)
-plt.plot(history.history['loss'], label='Train Loss')
-plt.plot(history.history['val_loss'], label='Validation Loss')
-plt.title('Model Loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.legend()
-plt.show()
-
-## Model Accuracy Graph:
-•	The training accuracy increases steadily with each epoch, showing that the model is learning patterns from the data.
-•	Validation accuracy also improves but starts to level off after some epochs.
-•	The small gap between training and validation accuracy suggests the model generalizes reasonably well, with only mild overfitting toward the end.
-Model Loss Graph:
-•	Training loss consistently decreases, meaning the model’s predictions are getting better on training data.
-•	Validation loss drops initially but then fluctuates slightly, indicating that learning has stabilized.
-•	This behavior shows the model has mostly converged, and further training may not give significant improvement.
-Step 10: Predict on Test Images
-•	Use model.predict to get class probabilities
-•	Display predicted and true labels
-def plot_predictions(index):
-    img = X_test[index]
-    true_label = class_names[np.argmax(y_test[index])]
-    pred_probs = model.predict(np.expand_dims(img, axis=0))
-    pred_label = class_names[np.argmax(pred_probs)]
-    
-    plt.imshow(img)
-    plt.title(f"True: {true_label} | Pred: {pred_label}")
-    plt.axis('off')
-    plt.show()
-
-for i in range(5):
-    plot_predictions(i)
-    
-    <img width="552" height="69" alt="image" src="https://github.com/user-attachments/assets/0febb5dd-2c8b-406e-9298-e518f58ea23b" />
-    <img width="504" height="504" alt="image" src="https://github.com/user-attachments/assets/f97a0605-a07a-48aa-8909-908744ffb565" />
-    <img width="327" height="34" alt="image" src="https://github.com/user-attachments/assets/e266bb30-ee77-4765-8e08-091237edb842" />
-    <img width="554" height="168" alt="image" src="https://github.com/user-attachments/assets/e45f8b04-4822-410d-b7c4-1a5d9d6cfdca" />
-    <img width="554" height="396" alt="image" src="https://github.com/user-attachments/assets/81232b25-568e-4453-af4a-daa8ecb71eae" />
-    <img width="554" height="299" alt="image" src="https://github.com/user-attachments/assets/d91e0a8a-5280-4886-8f58-2533d33104f2" />
-    <img width="554" height="284" alt="image" src="https://github.com/user-attachments/assets/be9212f4-4e6e-4f71-b3f8-43a953665c83" />
-   ##  Conclusion:
-Thus successfully implemented and trained a CNN to recognize objects across ten distinct categories using the CIFAR 10 dataset.
-
-
-
-
-
-
-
-
+## CONCLUSION
+Thus, machine learning classification models were successfully applied for heart disease prediction, and their performance was compared using standard classification evaluation metrics.
+# RESULT 
+The Heart Disease Prediction model was successfully developed using different machine learning classification algorithms. The models were evaluated using Accuracy, Precision, Recall, and F1-Score. The performance of the models was compared, and the best-performing model was identified for predicting heart disease.
 
 
